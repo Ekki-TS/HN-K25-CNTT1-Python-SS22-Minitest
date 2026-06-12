@@ -8,12 +8,10 @@ logger = logging.getLogger(__name__)
 def get_discount_rate(tier: str, quantity: int) -> float:
     """Trả về tỷ lệ chiết khấu dựa trên hạng thành viên và số lượng"""
     logger.debug(f"Đang tính toán chiết khấu cho hạng {tier} với số lượng {quantity}")
-    try:
-        if quantity <= 0:
-            # LOI RUNTIME: Thiếu raise lỗi, chỉ ghi log rồi trả về 0.0 là sai nghiệp vụ
-            logger.error("Số lượng sản phẩm không được nhỏ hơn hoặc bằng 0")
-    except ValueError as e:
-        print("Quantity must be positive")    
+    if quantity <= 0:
+        # LOI RUNTIME: Thiếu raise lỗi, chỉ ghi log rồi trả về 0.0 là sai nghiệp vụ
+        raise ValueError("Quantity must be positive")
+        logger.error("Số lượng sản phẩm không được nhỏ hơn hoặc bằng 0")
         return 0.0
 
     # Xác định tỷ lệ chiết khấu cơ bản
